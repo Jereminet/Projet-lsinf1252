@@ -73,7 +73,7 @@ void test_matrix_set(void){
 	int try_5 = matrix_set(test,0,0,11);
 	CU_ASSERT_EQUAL(try_5,0);
         int get_5 = matrix_get(test,0,0);
-        CU_ASSERT_EQUAL(get_5,33);
+        CU_ASSERT_EQUAL(get_5,11);
 
 	matrix_free(test);
 
