@@ -2,6 +2,7 @@
 #include <CUnit/CUnit.h>
 #include "matrix.h"
 
+// test de la valeur lines apres appel a matrix_init
 void test_init_lines(void){
 	struct matrix *test = matrix_init(4,3);
 	CU_ASSERT_EQUAL(test->lines,NULL);
@@ -9,6 +10,7 @@ void test_init_lines(void){
 	CU_PASS("Success matrix_init for lines");
 }
 
+// test de la valeur ncols apres appel a matrix_init
 void test_init_ncols(void){
         struct matrix *test = matrix_init(4,3);
         CU_ASSERT_EQUAL(test->ncols,3);
@@ -16,6 +18,7 @@ void test_init_ncols(void){
         CU_PASS("Success matrix_init for ncols");
 }
 
+// test de la valeur nlines apres appel a matrix_init
 void test_init_nlines(void){
         struct matrix *test = matrix_init(4,3);
         CU_ASSERT_EQUAL(test->nlines,4);
@@ -23,6 +26,7 @@ void test_init_nlines(void){
         CU_PASS("Success matrix_init for nlines");
 }
 
+//test de la methode matrix_get
 void test_matrix_get(void){
 	struct matrix *test = matrix_init(7,6);
 	int try_1 = matrix_get(test,5,3);
@@ -41,30 +45,42 @@ void test_matrix_get(void){
 	CU_PASS("Success matrix_get");
 }
 
+//test de la methode matrix_set
 void test_matrix_set(void){
 	struct matrix *test = matrix_init(5,5);
+	
 	int try_1 = matrix_set(test,3,2,8);
 	CU_ASSERT_EQUAL(try_1,0);
 	int get_1 = matrix_get(test,3,2);
 	CU_ASSERT_EQUAL(get_1,8);
 
 	int try_2 = matrix_set(test,4,1,78);
-	CU_ASSERT_EQUAL(try_2,0); //erreur
+	CU_ASSERT_EQUAL(try_2,0);
         int get_2 = matrix_get(test,4,1);
-        CU_ASSERT_EQUAL(get_2,78); //erreur
+        CU_ASSERT_EQUAL(get_2,78);
 
 
 	int try_3 = matrix_set(test,4,1,0);
-	CU_ASSERT_EQUAL(try_3,0); //erreur
+	CU_ASSERT_EQUAL(try_3,0);
         int get_3 = matrix_get(test,4,1);
         CU_ASSERT_EQUAL(get_3,0);
-   	//tester les cas particuliers
+   	
+	int try_4 = matrix_set(test,4,4,33);
+	CU_ASSERT_EQUAL(try_4,0);
+        int get_4 = matrix_get(test,4,4);
+        CU_ASSERT_EQUAL(get_4,33);
+
+	int try_5 = matrix_set(test,0,0,11);
+	CU_ASSERT_EQUAL(try_5,0);
+        int get_5 = matrix_get(test,0,0);
+        CU_ASSERT_EQUAL(get_5,33);
 
 	matrix_free(test);
 
 	CU_PASS("Success matrix_set");
 }
 
+//test de la methode matrix_add pour des matrices de meme dimension
 void test_matrix_add_same_size(void){
 	struct matrix *m1 = matrix_init(3,3);
         struct matrix *m2 = matrix_init(3,3);
@@ -97,6 +113,7 @@ void test_matrix_add_same_size(void){
 
 }
 
+//test de la methode matrix_add pour des matrices de dimension differente
 void test_matrix_add_different_size(void){
 	struct matrix *m1 = matrix_init(3,3);
         struct matrix *m2 = matrix_init(4,2);
@@ -131,6 +148,7 @@ void test_matrix_add_different_size(void){
 
 }
 
+//test de la methode matrix_transpose
 void test_matrix_transpose(void){
 	struct matrix *m1 = matrix_init(2,3);
 	struct matrix *m2 = matrix_init(3,2);
@@ -161,6 +179,7 @@ void test_matrix_transpose(void){
 	CU_PASS("Success matrix_transpose");
 }
 
+//test de la methode matrix_convert
 void test_matrix_convert(void){
 	const int *array[3];
     
@@ -183,6 +202,7 @@ void test_matrix_convert(void){
 	CU_PASS("Success matrix_convert");
 }
 
+//main
 int main(int argc, char* argv[])
 {
 	CU_pSuite pSuite = NULL;
