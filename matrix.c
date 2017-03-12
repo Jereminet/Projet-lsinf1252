@@ -52,10 +52,12 @@ int matrix_set(struct matrix *matrix, unsigned int i, unsigned int j, int val){
 							return 0;
 						}else if(countlines==0 && countelem==0 && (el->next==NULL)){ // cas où il y a plus d'une ligne mais qu'un seul élément ET que nous sommes sur la première ligne
 							matrix->lines=l->next;
+							free(el); 
 							free(l);
 							return 0;
 						}else if(countelem==0 && (el->next==NULL)){ // cas où il y a plus d'une ligne mais qu'un élément sur la ligne courante
 							prev->next=l->next;
+							free(el); 
 							free(l);
 							return 0;
 						}else if(countelem==0){ //cas où il y a plus d'une ligne et plusieurs éléments mais que nous sommes sur le premier element
@@ -128,25 +130,18 @@ int matrix_set(struct matrix *matrix, unsigned int i, unsigned int j, int val){
 				if(e==NULL){
 	                	        return -1;
 	               		}
-	            		if(countlines==0){ // cas où rajoute une ligne au tout début
-					e->next=NULL;
-					e->j=j;
-					e->value=val;
-					newline->i=i;
-					newline->elems=e;
-					newline->next=l;
+				e->next=NULL;
+				e->j=j;
+				e->value=val;
+				newline->i=i;
+				newline->elems=e;
+				newline->next=l;
+				if(countlines==0){ // cas où rajoute une ligne au tout début
 					matrix->lines=newline;
-					return 0;
 				}else{ //cas general
-					e->next=NULL;
-					e->j=j;
-					e->value=val;
-					newline->i=i;
-					newline->elems=e;
-					newline->next=l;
 					prev->next=newline;
-					return 0;
 				}
+				return 0;
 			}
 		}
 	} //fin while(l!=NULL)
@@ -274,34 +269,34 @@ struct matrix *matrix_convert(const int **array, unsigned int nlines,unsigned in
 }
 
 // MAIN A SUPPRIMER ***********************************************************************************************
+
 /*
 int main (int argc, char *argv[]){
-	struct matrix *m1 = matrix_init(3,3);
-        struct matrix *m2 = matrix_init(3,3);
+	 struct matrix *test = matrix_init(5,5);
 
-        matrix_set(m1,0,0,4);
-        matrix_set(m1,0,2,8);
-        matrix_set(m1,1,0,7);
-        matrix_set(m1,2,2,1);
+        int try_1 = matrix_set(test,3,2,8);
+        int get_1 = matrix_get(test,3,2);
 
-    
-        matrix_set(m2,0,0,8);
-        matrix_set(m2,2,1,3);
-        matrix_set(m2,1,1,4);
-        matrix_set(m2,2,2,4);
+        int try_2 = matrix_set(test,4,1,78);
+        int get_2 = matrix_get(test,4,1);
 
-        struct matrix *m3 = matrix_add(m1,m2);
 
-	printf(" %d \n",matrix_get(m3,0,0));
-	printf(" %d \n",matrix_get(m3,0,2));
-	printf(" %d \n",matrix_get(m3,1,0));
-	printf(" %d \n",matrix_get(m3,2,2));
-	printf(" %d \n",matrix_get(m3,2,1));
-	printf(" %d \n",matrix_get(m3,1,1));
+        int try_3 = matrix_set(test,4,1,0);
+        int get_3 = matrix_get(test,4,1);
 
-	matrix_free(m1);
-        matrix_free(m2);
-        matrix_free(m3);
+        int try_4 = matrix_set(test,4,4,33);
+        int get_4 = matrix_get(test,4,4);
+
+        int try_5 = matrix_set(test,0,0,11);
+        int get_5 = matrix_get(test,0,0);
+
+	printf("Try1 : %d Get1 : %d \n",try_1,get_1);
+	printf("Try2 : %d Get2 : %d \n",try_2,get_2);
+	printf("Try3 : %d Get3 : %d \n",try_3,get_3);
+	printf("Try4 : %d Get4 : %d \n",try_4,get_4);
+	printf("Try5 : %d Get5 : %d \n",try_5,get_5);
+
+        matrix_free(test);
 }*/
 
 
