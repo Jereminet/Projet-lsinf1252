@@ -163,7 +163,7 @@ void test_matrix_transpose(void){
     
     	struct matrix *m3 = matrix_transpose(m1);
 
-	int i, j, k, l;
+	unsigned int i, j, k, l;
 	for(i = 0; i < (m3->nlines); i++) {
         	for(j = 0; j < (m3->ncols); j++) {
             		k = matrix_get(m3,i,j);
@@ -205,6 +205,9 @@ void test_matrix_convert(void){
 //main
 int main(int argc, char* argv[])
 {
+	printf("%d \n",argc);
+	printf("%s \n",argv[0]);	
+	
 	CU_pSuite pSuite = NULL;
 
 	if (CUE_SUCCESS != CU_initialize_registry())
