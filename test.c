@@ -5,6 +5,7 @@
 // test de la valeur lines apres appel a matrix_init
 void test_init_lines(void){
 	struct matrix *test = matrix_init(4,3);
+	CU_ASSERT_PTR_NOT_NULL(test);
 	CU_ASSERT_EQUAL(test->lines,NULL);
 	matrix_free(test);
 	CU_PASS("Success matrix_init for lines");
@@ -13,6 +14,7 @@ void test_init_lines(void){
 // test de la valeur ncols apres appel a matrix_init
 void test_init_ncols(void){
         struct matrix *test = matrix_init(4,3);
+	CU_ASSERT_PTR_NOT_NULL(test);
         CU_ASSERT_EQUAL(test->ncols,3);
         matrix_free(test);
         CU_PASS("Success matrix_init for ncols");
@@ -21,6 +23,7 @@ void test_init_ncols(void){
 // test de la valeur nlines apres appel a matrix_init
 void test_init_nlines(void){
         struct matrix *test = matrix_init(4,3);
+	CU_ASSERT_PTR_NOT_NULL(test);
         CU_ASSERT_EQUAL(test->nlines,4);
         matrix_free(test);
         CU_PASS("Success matrix_init for nlines");
@@ -29,6 +32,7 @@ void test_init_nlines(void){
 //test de la methode matrix_get
 void test_matrix_get(void){
 	struct matrix *test = matrix_init(7,6);
+	CU_ASSERT_PTR_NOT_NULL(test);
 	int try_1 = matrix_get(test,5,3);
 	CU_ASSERT_EQUAL(try_1,0);
 
@@ -48,7 +52,8 @@ void test_matrix_get(void){
 //test de la methode matrix_set
 void test_matrix_set(void){
 	struct matrix *test = matrix_init(5,5);
-	
+	CU_ASSERT_PTR_NOT_NULL(test);
+
 	int try_1 = matrix_set(test,3,2,8);
 	CU_ASSERT_EQUAL(try_1,0);
 	int get_1 = matrix_get(test,3,2);
@@ -83,8 +88,10 @@ void test_matrix_set(void){
 //test de la methode matrix_add pour des matrices de meme dimension
 void test_matrix_add_same_size(void){
 	struct matrix *m1 = matrix_init(3,3);
+	CU_ASSERT_PTR_NOT_NULL(m1);
         struct matrix *m2 = matrix_init(3,3);
-	
+	CU_ASSERT_PTR_NOT_NULL(m2);
+
         matrix_set(m1,0,0,4);
         matrix_set(m1,0,2,8);
         matrix_set(m1,1,0,7);
@@ -97,6 +104,7 @@ void test_matrix_add_same_size(void){
 	matrix_set(m2,2,2,4);
 	
 	struct matrix *m3 = matrix_add(m1,m2);
+	CU_ASSERT_PTR_NOT_NULL(m3);
 
 	CU_ASSERT_EQUAL(matrix_get(m3,0,0),12);
 	CU_ASSERT_EQUAL(matrix_get(m3,0,2),8);
@@ -116,7 +124,9 @@ void test_matrix_add_same_size(void){
 //test de la methode matrix_add pour des matrices de dimension differente
 void test_matrix_add_different_size(void){
 	struct matrix *m1 = matrix_init(3,3);
+	CU_ASSERT_PTR_NOT_NULL(m1);
         struct matrix *m2 = matrix_init(4,2);
+	CU_ASSERT_PTR_NOT_NULL(m2);
 
 	matrix_set(m1,0,0,4);
         matrix_set(m1,0,2,8);
@@ -130,19 +140,10 @@ void test_matrix_add_different_size(void){
         matrix_set(m2,3,0,4);
 
         struct matrix *m3 = matrix_add(m1,m2);
-
-	CU_ASSERT_EQUAL(matrix_get(m3,0,0),4);
-        CU_ASSERT_EQUAL(matrix_get(m3,0,2),8);
-	CU_ASSERT_EQUAL(matrix_get(m3,1,2),0);
-        CU_ASSERT_EQUAL(matrix_get(m3,5,4),3);
-        CU_ASSERT_EQUAL(matrix_get(m3,6,3),4);
-	CU_ASSERT_EQUAL(matrix_get(m3,6,4),0);
-        CU_ASSERT_EQUAL(matrix_get(m3,4,1),0);
-        CU_ASSERT_EQUAL(matrix_get(m3,1,4),0);
+	CU_ASSERT_PTR_NULL(m3);
 
         matrix_free(m1);
         matrix_free(m2);
-        matrix_free(m3);
 
         CU_PASS("Success matrix_add_different_size");
 
@@ -151,8 +152,10 @@ void test_matrix_add_different_size(void){
 //test de la methode matrix_transpose
 void test_matrix_transpose(void){
 	struct matrix *m1 = matrix_init(2,3);
+	CU_ASSERT_PTR_NOT_NULL(m1);
 	struct matrix *m2 = matrix_init(3,2);
-    
+    	CU_ASSERT_PTR_NOT_NULL(m2);
+
    	matrix_set(m1,0,0,1);
     	matrix_set(m1,0,2,3);
     	matrix_set(m1,1,0,4);
@@ -162,6 +165,7 @@ void test_matrix_transpose(void){
     	matrix_set(m2,0,1,4);
     
     	struct matrix *m3 = matrix_transpose(m1);
+	CU_ASSERT_PTR_NOT_NULL(m3);
 
 	unsigned int i, j, k, l;
 	for(i = 0; i < (m3->nlines); i++) {
@@ -192,6 +196,7 @@ void test_matrix_convert(void){
     	array[2] = arr_3;
 	
 	struct matrix *test = matrix_convert(array,3,2);
+	CU_ASSERT_PTR_NOT_NULL(test);
 
 	CU_ASSERT_EQUAL(matrix_get(test,0,1),8);
 	CU_ASSERT_EQUAL(matrix_get(test,1,1),0);
@@ -205,7 +210,8 @@ void test_matrix_convert(void){
 //main
 int main(int argc, char* argv[])
 {
-	printf("%d \n",argc);
+	//affichage des arguments pour palier au probleme des arguments inutilises lors de la compilation
+	printf("%d \n",argc); 
 	printf("%s \n",argv[0]);	
 	
 	CU_pSuite pSuite = NULL;

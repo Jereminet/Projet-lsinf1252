@@ -200,13 +200,9 @@ int matrix_get(const struct matrix *matrix, unsigned int i, unsigned int j){
 
 struct matrix *matrix_add(const struct matrix *m1, const struct matrix *m2){
 	struct matrix* mat;
-	int i;
-	int j;
-	int k;
-	int l;
+	unsigned int i;
+	unsigned int j;
 	int val;
-	int length;
-	int width;
 	if(((m1->nlines)==(m2->nlines)) && ((m1->ncols)==(m2->ncols))){ //les 2 matrices sont de memes dimensions
 		mat=matrix_init(m1->nlines,m1->ncols);
 		for(i=0;i<(mat->nlines);i++){
@@ -217,31 +213,14 @@ struct matrix *matrix_add(const struct matrix *m1, const struct matrix *m2){
 		}
 		return mat;
 	}else{ //les 2 matrices sont de dimensions differentes
-		length=(m1->nlines)+(m2->nlines);
-		width=(m1->ncols)+(m2->ncols);
-		mat=matrix_init(length,width);
-		
-		for(k=0;k<(m1->nlines);k++){
-			for(l=0;l<(m1->ncols);l++){
-				val=matrix_get(m1,k,l);
-				matrix_set(mat,k,l,val);
-			}
-		}
-		
-		for(i=0;i<(m2->nlines);i++){
-			for(j=0;j<(m2->ncols);j++){
-				int val=matrix_get(m2,i,j);
-				matrix_set(mat,i+(m1->nlines),j+(m1->ncols),val);
-			}
-		}
-		return mat;
+		return NULL;
 	}
 }
 
 struct matrix *matrix_transpose(const struct matrix *matrix){
 	struct matrix* mat;
-	int i;
-	int j;
+	unsigned int i;
+	unsigned int j;
 	int val;
 	mat=matrix_init(matrix->ncols,matrix->nlines);
 	for(i=0;i<(mat->nlines);i++){
@@ -255,8 +234,8 @@ struct matrix *matrix_transpose(const struct matrix *matrix){
 
 struct matrix *matrix_convert(const int **array, unsigned int nlines,unsigned int ncols){
 	struct matrix* mat;
-	int i;
-	int j;
+	unsigned int i;
+	unsigned int j;
 	int val;
 	mat=matrix_init(nlines,ncols);
 	for(i=0;i<nlines;i++){
@@ -267,37 +246,4 @@ struct matrix *matrix_convert(const int **array, unsigned int nlines,unsigned in
 	}
 	return mat;
 }
-
-// MAIN A SUPPRIMER ***********************************************************************************************
-
-/*
-int main (int argc, char *argv[]){
-	 struct matrix *test = matrix_init(5,5);
-
-        int try_1 = matrix_set(test,3,2,8);
-        int get_1 = matrix_get(test,3,2);
-
-        int try_2 = matrix_set(test,4,1,78);
-        int get_2 = matrix_get(test,4,1);
-
-
-        int try_3 = matrix_set(test,4,1,0);
-        int get_3 = matrix_get(test,4,1);
-
-        int try_4 = matrix_set(test,4,4,33);
-        int get_4 = matrix_get(test,4,4);
-
-        int try_5 = matrix_set(test,0,0,11);
-        int get_5 = matrix_get(test,0,0);
-
-	printf("Try1 : %d Get1 : %d \n",try_1,get_1);
-	printf("Try2 : %d Get2 : %d \n",try_2,get_2);
-	printf("Try3 : %d Get3 : %d \n",try_3,get_3);
-	printf("Try4 : %d Get4 : %d \n",try_4,get_4);
-	printf("Try5 : %d Get5 : %d \n",try_5,get_5);
-
-        matrix_free(test);
-}*/
-
-
 
